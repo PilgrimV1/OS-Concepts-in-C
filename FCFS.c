@@ -2,11 +2,14 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <semaphore.h>
 
 struct process {
-    int time_loaded;
-    int time_exited;
-    int turnaround_time;
+    pid_t real_pid;
+    int arrival_time;
+    int burst_time;
+    int start_time;
+    int completion_time;
 };
 
 int main (void) {
