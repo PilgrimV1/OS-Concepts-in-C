@@ -25,7 +25,7 @@ int main (void) {
     struct process CP_ID[n]; // not sure what name to call it here
 
     for (int i = 0; i < n; i++) {
-        sem_init(&sems[i], 1, 0);
+        sem_init(&sems[i], 1, 0); // initialize semaphores within loop
         child_id = fork();  // Forks creating a child
         if (child_id == 0) { // Check if the process is a child
             break;           // The Child is excluded from forking 
