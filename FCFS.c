@@ -27,21 +27,28 @@ int main (void) {
     int i;
     for (i = 0; i < n; i++) {
         sem_init(&sems[i], 1, 0); // initialize semaphores within loop
+        CP_ID[i].burst_time = (rand() % 5) + 1; // 1-5 seconds
         child_id = fork();  // Forks creating a child
         if (child_id == 0) { // Check if the process is a child
             break;           // The Child is excluded from forking 
-        } else {
-
         }
         CP_ID[i].real_pid = child_id; // Identification for the child id
     }
 
     if (child_id == 0) {
+        sem_wait(&sems[i]);
+        printf("Process %d (PID: %d) starting, burst: %d\n", i, getpid(), CP_ID[i].burst_time);
+        sleep(CP_ID[i].burst_time);
+        printf("Process %d (PID: %d) done\n", i, getpid());
         exit(0);
-    } else {
-
+    } else {    // Parent process
+        sem_post(&sems[0]);      // Parent process upholding the other processes
+        for (int i = 0; i < n; i++) {
+            waitpid(CP_ID[i].real_pid, &status, 0); // Generating the waits for the children
+            if (i < n - 1) {
+                sem_post(&sems[i+1]);
+            }
+        }
     }
-
-
         return 0;
 }
