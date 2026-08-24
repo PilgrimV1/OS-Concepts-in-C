@@ -24,7 +24,8 @@ int main (void) {
     sem_t sems[n];
     struct process CP_ID[n]; // not sure what name to call it here
 
-    for (int i = 0; i < n; i++) {
+    int i;
+    for (i = 0; i < n; i++) {
         sem_init(&sems[i], 1, 0); // initialize semaphores within loop
         child_id = fork();  // Forks creating a child
         if (child_id == 0) { // Check if the process is a child
@@ -34,5 +35,13 @@ int main (void) {
         }
         CP_ID[i].real_pid = child_id; // Identification for the child id
     }
+
+    if (child_id == 0) {
+        exit(0);
+    } else {
+
+    }
+
+
         return 0;
 }
