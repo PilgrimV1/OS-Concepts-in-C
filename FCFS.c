@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <semaphore.h>
 #include <time.h>
-#include <fcntl.h>
+#include <fcntl.h> // For MacOS to initialize the semaphores
 
 struct process {
     pid_t real_pid;
@@ -66,9 +66,9 @@ int main (void) {
 
     if (child_id == 0) {
         sem_wait(start_sems[i]);
-        printf("Process %d (PID: %d) Executing\n", i, getpid());
+        printf("Process %d (PID: %d) Status: Executing\n", i, getpid());
         sleep(CP_ID[i].burst_time);
-        printf("Process %d (PID: %d) Completed\n", i, getpid());
+        printf("Process %d (PID: %d) Status: Completed\n", i, getpid());
         sem_post(end_sems[i]); // to signal the end
         exit(0);
     } else {    // Parent process
@@ -79,6 +79,15 @@ int main (void) {
             if (i < n - 1) {
                 sem_post(start_sems[i+1]);
             }
+            // Unlink and Remove Semaphores from the Kernel
+            char name[32];
+            snprintf(name, sizeof(name), "/start_%d", i); // Identify the semaphore you want to unlink and remove from the kernel
+            sem_unlink(name);   // Unlinked the name from the kernel
+            sem_close(start_sems[i]);   // Removed the semaphore from kernel
+
+            snprintf(name, sizeof(name), "/end_%d", i);
+            sem_unlink(name);
+            sem_close(end_sems[i]);
         }
     }
         return 0;
