@@ -19,18 +19,21 @@ int main (void) {
     int status; // Process Status
     int n;      // Process Quantity Input from the User
     pid_t child_id;
-
+    
+    
+    printf("Input number of processes to be generated (5-10): ");
+    int result;
     do {
-        printf("Input number of processes to be generated (5-10): ");
-        scanf("%d", &n);
-        int result = scanf("%d", &n);
-        if (result == (n < 5 || n > 10)) {
-            printf("ERROR: Choose a valid number!");
+        result = scanf("%d", &n);
+        if (result != 1) {
+            printf("ERROR: Choose a number!");
             continue;
-        } else if () {
-
+        } else if (n < 5 || n > 10) {
+            printf("ERROR: Choose a valid number!\n");
+            while (getchar() != '\n'); // Clears Input Buffer (so that the next input query is clean)
+            continue;
         }
-    } while() ;
+    } while(result != 1 || n < 5 || n > 10);
 
     sem_t *start_sems[n];
     sem_t *end_sems[n];
