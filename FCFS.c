@@ -27,10 +27,10 @@ int main (void) {
         result = scanf("%d", &n);
         if (result != 1) {
             printf("ERROR: Choose a number!");
+            while (getchar() != '\n'); // Clears Input Buffer (so that the n    ext input query is clean)
             continue;
         } else if (n < 5 || n > 10) {
             printf("ERROR: Choose a valid number!\n");
-            while (getchar() != '\n'); // Clears Input Buffer (so that the next input query is clean)
             continue;
         }
     } while(result != 1 || n < 5 || n > 10);
