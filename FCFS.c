@@ -66,8 +66,9 @@ int main (void) {
 
     if (child_id == 0) {
         sem_wait(start_sems[i]);
+        printf("Process %d (PID: %d) Executing\n", i, getpid());
         sleep(CP_ID[i].burst_time);
-        printf("Process %d (PID: %d) executing\n", i, getpid());
+        printf("Process %d (PID: %d) Completed\n", i, getpid());
         sem_post(end_sems[i]); // to signal the end
         exit(0);
     } else {    // Parent process
