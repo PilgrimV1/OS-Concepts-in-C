@@ -19,8 +19,17 @@ int main (void) {
     int status; // Process Status
     int n;      // Process Quantity Input from the User
     pid_t child_id;
-    printf("Input number of processes to be generated (5-10): ");
-    scanf("%d", &n);
+
+    do {
+        printf("Input number of processes to be generated (5-10): ");
+        scanf("%d", &n);
+        result = scanf();
+        if (result == (n < 5 || n > 10)) {
+            printf("ERROR: Choose a valid number!");
+        } else if () {
+
+        }
+    } while() ;
 
     sem_t *start_sems[n];
     sem_t *end_sems[n];
@@ -28,6 +37,7 @@ int main (void) {
 
     int i;
     for (i = 0; i < n; i++) {
+        // Initializing the semaphores (MacOS version)
         char name[32];
         snprintf(name, sizeof(name), "/start_%d", i);
         start_sems[i] = sem_open(name, O_CREAT, 0644, 0);
