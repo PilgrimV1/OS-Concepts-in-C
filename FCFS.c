@@ -23,9 +23,10 @@ int main (void) {
     do {
         printf("Input number of processes to be generated (5-10): ");
         scanf("%d", &n);
-        result = scanf();
+        int result = scanf("%d", &n);
         if (result == (n < 5 || n > 10)) {
             printf("ERROR: Choose a valid number!");
+            continue;
         } else if () {
 
         }
@@ -34,6 +35,7 @@ int main (void) {
     sem_t *start_sems[n];
     sem_t *end_sems[n];
     struct process CP_ID[n]; // not sure what name to call it here
+    srand(time(NULL));       // True Randomization
 
     int i;
     for (i = 0; i < n; i++) {
